@@ -14,12 +14,18 @@ function Home() {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [photoLimit, setPhotoLimit] = useState(10);
 
   useEffect(function onMount(){
     if (username){
-      dispatch(fetchDogs({page: currentPage}));
+      dispatch(fetchDogs({page: currentPage, limit: photoLimit}));
     }
   }, [currentPage]);
+
+  function handleValueChange(e, valueCb) {
+    const newValue = e.target.value;
+    valueCb(newValue);
+  }
 
   function handleCurrentPageDecrement() {
     if (currentPage === 0) {
@@ -56,6 +62,15 @@ function Home() {
         disabled={fetchingDogs}
         onClick={handleCurrentPageIncrement} 
         />
+        <div>
+        <Input
+          type="text"
+          name="limit"
+          placeholder="Photo limit"
+          className="m-bottom-2"
+          onChange={(e) => handleValueChange(e, setPhotoLimit)}
+        />
+        </div>
         </div>
       ) : (<CustomLink to="login" label="Log In" />)
       }

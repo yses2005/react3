@@ -8,10 +8,10 @@ export function fetchDogs({page = 0,limit = 10,} = {}){
             type: dog.FETCH_DOG_PENDING,
         }); 
 
-        const dogsList = await fetchDogsAPI(
+        const dogsList = await fetchDogsAPI({
             page,
             limit,
-        );
+        });
         
         dispatch({
             type: dog.FETCH_DOG_COMPLETED,

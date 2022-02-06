@@ -4,6 +4,7 @@ async function fetchDogs({
   order = "ASC",
   size = "med",
 } = {}) {
+  console.log(page);
   const response = await fetch(
     `https://api.thedogapi.com/v1/images/search?limit=${limit}&page=${page}&order=${order}&size=${size}`
   );
