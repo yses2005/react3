@@ -28,6 +28,11 @@ function Login() {
   function handleFormSubmit(e) {
     e.preventDefault();
     console.log(name, password);
+    if(!name || !password){
+      alert("Name and Password required");
+    }else{
+      dispatch(login(name));
+    }
     // dispatch(login());
   }
 
