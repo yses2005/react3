@@ -15,12 +15,19 @@ function Home() {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [photoLimit, setPhotoLimit] = useState(10);
+  const [ascending, setAscending] = useState(true);
 
   useEffect(function onMount(){
     if (username){
-      dispatch(fetchDogs({page: currentPage, limit: photoLimit}));
+      dispatch(fetchDogs(
+        {
+          page: currentPage, 
+          limit: photoLimit,
+          order: ascending ? "ASC" : "DESC"
+        }
+      ));
     }
-  }, [currentPage]);
+  }, [currentPage, ascending]);
 
   function handleValueChange(e, valueCb) {
     const newValue = e.target.value;
@@ -39,6 +46,10 @@ function Home() {
     setCurrentPage(currentPage +1);
   }
 
+  function handleOrderChange() {
+    setAscending(!ascending);
+  }
+
   return (
     <FullscreenWrapper>
       <h1>Doggo List</h1>
@@ -49,34 +60,40 @@ function Home() {
       </p>
       {username ? (
         <div className="m-bottom-4">
-        <Button 
-        label="<" 
-        className="m-right-1" 
-        disabled={fetchingDogs}
-        onClick={handleCurrentPageDecrement} 
-        />
-        <Button label={currentPage} />
-        <Button 
-        label=">" 
-        className="m-left-1" 
-        disabled={fetchingDogs}
-        onClick={handleCurrentPageIncrement} 
-        />
-        <div>
-        <Input
-          type="text"
-          name="limit"
-          placeholder="Photo limit"
-          className="m-bottom-2"
-          onChange={(e) => handleValueChange(e, setPhotoLimit)}
-        />
-        <Select 
-          name="size"
+          <Button 
+          label="<" 
+          className="m-right-1" 
           disabled={fetchingDogs}
-          className="m-bottom-2"
-          options={["small","med","full"]} 
-        />
-        </div>
+          onClick={handleCurrentPageDecrement} 
+          />
+          <Button label={currentPage} />
+          <Button 
+          label=">" 
+          className="m-left-1" 
+          disabled={fetchingDogs}
+          onClick={handleCurrentPageIncrement} 
+          />
+          <div>
+            <Input
+              type="text"
+              name="limit"
+              placeholder="Photo limit"
+              className="m-bottom-2"
+              onChange={(e) => handleValueChange(e, setPhotoLimit)}
+            />
+            <Select 
+              name="size"
+              disabled={fetchingDogs}
+              className="m-bottom-2"
+              options={["small","med","full"]} 
+            />
+              <Button 
+                label={ascending ? "ASC" : "DESC"} 
+                className="m-left-1" 
+                disabled={fetchingDogs}
+                onClick={handleOrderChange} 
+              />
+          </div>
         </div>
       ) : (<CustomLink to="login" label="Log In" />)
       }
