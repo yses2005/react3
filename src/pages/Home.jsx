@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { FullscreenWrapper, CustomLink, Loader, Button, Input, Select } from "components";
+import { logout } from "redux/actions/authActions";
 
 import { fetchDogs } from "redux/actions/dogActions";
-import { useState } from "react";
 
 function Home() {
   const username = useSelector(s => s.auth.username);
@@ -50,6 +50,10 @@ function Home() {
     setAscending(!ascending);
   }
 
+  function handleLogout() {
+    dispatch(logout());
+  }
+
   return (
     <FullscreenWrapper>
       <h1>Doggo List</h1>
@@ -78,26 +82,31 @@ function Home() {
               type="text"
               name="limit"
               placeholder="Photo limit"
-              className="m-bottom-2"
+              className="m-all-2"
               onChange={(e) => handleValueChange(e, setPhotoLimit)}
             />
             <Select 
               name="size"
               disabled={fetchingDogs}
-              className="m-bottom-2"
+              className="m-all-2"
               options={["small","med","full"]} 
             />
               <Button 
                 label={ascending ? "ASC" : "DESC"} 
-                className="m-left-1" 
+                className="m-all-1" 
                 disabled={fetchingDogs}
                 onClick={handleOrderChange} 
               />
           </div>
+          <Button 
+            label="Logout"
+            className="m-all-1" 
+            onClick={handleLogout} 
+          />
         </div>
       ) : (<CustomLink to="login" label="Log In" />)
       }
-      {fetchingDogs ? <Loader /> : (
+      {username ? ((fetchingDogs) ? <Loader /> : (
         <div>    
           {
             dogsList.map((dog) => (
@@ -110,7 +119,7 @@ function Home() {
             ))
           }
         </div>
-      )}
+      )): null}
     </FullscreenWrapper>
   );
 }
