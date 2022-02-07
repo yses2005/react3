@@ -2,7 +2,7 @@ async function fetchDogs({
   limit = 10,
   page = 0,
   order = "ASC",
-  size = "med",
+  size = "small",
 } = {}) {
   console.log(page);
   const response = await fetch(

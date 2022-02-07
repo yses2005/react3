@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { FullscreenWrapper, CustomLink, Loader, Button, Input } from "components";
+import { FullscreenWrapper, CustomLink, Loader, Button, Input, Select } from "components";
 
 import { fetchDogs } from "redux/actions/dogActions";
 import { useState } from "react";
@@ -70,6 +70,12 @@ function Home() {
           className="m-bottom-2"
           onChange={(e) => handleValueChange(e, setPhotoLimit)}
         />
+        <Select 
+          name="size"
+          disabled={fetchingDogs}
+          className="m-bottom-2"
+          options={["small","med","full"]} 
+        />
         </div>
         </div>
       ) : (<CustomLink to="login" label="Log In" />)
@@ -78,7 +84,7 @@ function Home() {
         <div>    
           {
             dogsList.map((dog) => (
-              <img src={dog.url} className="dog-img" />
+              <img src={dog.url}  />
             ))
           }
         </div>
