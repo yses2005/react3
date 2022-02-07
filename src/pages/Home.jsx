@@ -101,7 +101,12 @@ function Home() {
         <div>    
           {
             dogsList.map((dog) => (
-              <img src={dog.url}  />
+              <div className="m-bottom-4">
+                <img src={dog.url}  />
+                <label>
+                  {dog.breeds[0] ? dog.breeds[0].name : "Doggo"}
+                </label>
+              </div>
             ))
           }
         </div>
