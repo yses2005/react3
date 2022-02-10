@@ -29,6 +29,11 @@ function Login() {
     e.preventDefault();
     console.log(name, password);
     // dispatch(login());
+    if (!name || !password) {
+      alert("The password or name is invalid!");
+    } else {
+      dispatch(login(name));
+    }
   }
 
   const submitButtonLabel = loginPending ? "Loading..." : "Submit";

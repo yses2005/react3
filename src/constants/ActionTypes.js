@@ -7,3 +7,9 @@ export const auth = keyMirror({
 
   LOGOUT: null,
 });
+
+export const dog = keyMirror({
+  FETCH_DOGS_PENDING: null,
+  FETCH_DOGS_COMPLETED: null,
+  FETCH_DOGS_FAILED: null,
+})
