@@ -5,6 +5,7 @@ import { FullscreenWrapper, CustomLink, Loader, Button, Input, Select } from "co
 import { logout } from "redux/actions/authActions";
 
 import { fetchDogs } from "redux/actions/dogActions";
+import { waitForDomChange } from "@testing-library/react";
 
 function Home() {
   const username = useSelector(s => s.auth.username);
@@ -16,6 +17,7 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(0);
   const [photoLimit, setPhotoLimit] = useState(10);
   const [ascending, setAscending] = useState(true);
+  const [selection, setSelection] = useState("thumb");
 
   useEffect(function onMount(){
     if (username){
@@ -27,7 +29,7 @@ function Home() {
         }
       ));
     }
-  }, [currentPage, ascending]);
+  }, [currentPage, ascending, selection]);
 
   function handleValueChange(e, valueCb) {
     const newValue = e.target.value;
@@ -52,6 +54,12 @@ function Home() {
 
   function handleLogout() {
     dispatch(logout());
+  }
+
+  function handleSelectChange(e, valueCb) {
+    console.log("selection changed")
+    const newValue = e.target.value;
+    valueCb(newValue);
   }
 
   return (
@@ -85,12 +93,17 @@ function Home() {
               className="m-all-2"
               onChange={(e) => handleValueChange(e, setPhotoLimit)}
             />
-            <Select 
-              name="size"
-              disabled={fetchingDogs}
-              className="m-all-2"
-              options={["small","med","full"]} 
-            />
+            
+            <select
+              onChange={(e) => handleSelectChange(e, setSelection)}
+              action="/"
+              >
+              <option selected value="thumb" key="thumb">thumb</option>
+              <option value="small" key="small">small</option>
+              <option value="med" key="med">med</option>
+              <option value="full" key="full">full</option>
+            </select>
+
               <Button 
                 label={ascending ? "ASC" : "DESC"} 
                 className="m-all-1" 
@@ -111,7 +124,7 @@ function Home() {
           {
             dogsList.map((dog) => (
               <div className="m-bottom-4">
-                <img src={dog.url}  />
+                <img className={selection} src={dog.url}  />
                 <label>
                   {dog.breeds[0] ? dog.breeds[0].name : "Doggo"}
                 </label>
