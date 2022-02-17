@@ -1,6 +1,6 @@
 import { auth } from "constants/ActionTypes";
 
-export function login() {
+export function login(username) {
   return async (dispatch) => {
     dispatch({
       type: auth.LOGIN_PENDING,
@@ -8,19 +8,13 @@ export function login() {
 
     const hasError = false;
     setTimeout(() => {
-      if (hasError) {
-        dispatch({
-          type: auth.LOGIN_FAILED,
-          payload: {
-            errorMessage: "Something went wrong, please try again later.",
-          },
-        });
-      } else {
         dispatch({
           type: auth.LOGIN_COMPLETED,
+          payload: {
+            username,
+          },
         });
-      }
-    }, 3000);
+    }, 0);
   };
 }
 

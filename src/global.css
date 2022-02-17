@@ -1,3 +1,23 @@
+.thumb {
+  width: 250px;
+  height: 250px;
+}
+
+.small {
+  width: 500px;
+  height: 500px;
+}
+
+.med {
+  width: 750px;
+  height: 750px;
+}
+
+.full {
+  width: 1000px;
+  height: 1000px;
+}
+
 .m-all-1 {
   margin: var(--space-1);
 }
