@@ -27,8 +27,10 @@ function Login() {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    console.log(name, password);
-    // dispatch(login());
+    if( !(name && password) )
+      alert("we needz ur uzer n password")
+    else
+      dispatch(login(name));
   }
 
   const submitButtonLabel = loginPending ? "Loading..." : "Submit";

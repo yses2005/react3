@@ -5,6 +5,7 @@ const initialState = {
   loginError: null, // Wrong credentials / sorry you can't login today
 
   isLoggedIn: false,
+  username: null
 };
 
 /**
@@ -22,10 +23,12 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case auth.LOGIN_COMPLETED: {
+      const {username} = action.payload
       return {
         ...state,
         loginPending: false,
         isLoggedIn: true,
+        username
       };
     }
 
